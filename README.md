@@ -1,1 +1,1 @@
-# BETiC---APK
+# BETiC
