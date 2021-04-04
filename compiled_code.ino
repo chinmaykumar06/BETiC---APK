@@ -33,7 +33,7 @@ void limit_b(){
 void pause_delay()
 {
     time_now = millis();
-    while(millis() < time_now + period1){}
+    while(millis() < time_now + number1){}
 }
 
 
