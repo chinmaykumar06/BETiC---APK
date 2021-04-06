@@ -109,15 +109,6 @@ void initButtons(){
 	attachInterrupt(digitalPinToInterrupt(START_STOP_BUTT),toggleStartStop,FALLING);
 }
 
-void initMotor(){
-	pinMode(MOTOR_DIR_PIN, OUTPUT);
-	pinMode(MOTOR_STEP_PIN, OUTPUT);
-	motor_pulse_duration = 0;
-
-	Timer1.initialize(4000000);
-	Timer1.attachInterrupt(toggleMotorStep);
-}
-
 void initSensors(){
 	pinMode(HALL_LEFT_PIN, INPUT);
 	pinMode(HALL_RIGHT_PIN, INPUT);
@@ -125,6 +116,16 @@ void initSensors(){
 	attachInterrupt(digitalPinToInterrupt(HALL_LEFT_PIN),leftExtremeReached,FALLING);
 	attachInterrupt(digitalPinToInterrupt(HALL_RIGHT_PIN),rightExtremeReached,FALLING);
 	attachInterrupt(digitalPinToInterrupt(HALL_CENTER_PIN),centerReached,FALLING);
+}
+
+void initMotor(){
+	pinMode(MOTOR_DIR_PIN, OUTPUT);
+	pinMode(MOTOR_STEP_PIN, OUTPUT);
+	motor_pulse_duration = 0;
+
+	GO_TO_ZERO = 1;
+	Timer1.initialize(4000000);
+	Timer1.attachInterrupt(toggleMotorStep);
 }
 
 void initLCD(){
