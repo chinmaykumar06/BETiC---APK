@@ -4,6 +4,7 @@
 #define Step 11
 int pd =4000;
 boolean setdir =LOW;
+
 void limit_a(){
   setdir = !setdir;
 }
@@ -29,4 +30,6 @@ void loop() {
   digitalWrite(Step,LOW);
   delayMicroseconds(pd);
   
+  // lcd 
+  // seven_segment
 }

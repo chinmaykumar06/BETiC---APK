@@ -69,8 +69,11 @@ void setup() {
 
 void loop() {
   
+  //read current buttons
   butstate =  digitalRead(but);
   butstate1 =  digitalRead(but1);
+
+  // set session_time
   if (butstate == HIGH && butstate1 == LOW) {
     
     currentMillis = millis();
@@ -86,6 +89,8 @@ void loop() {
     Display.setNumber(number);
     Display.refreshDisplay();
   }
+
+  //set pause_time
   if (butstate1 == HIGH && butstate == LOW) {
     
     currentMillis1 = millis();
