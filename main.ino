@@ -77,8 +77,8 @@ void setup(){
 	//initializations
 	sei();
 	initButtons();
-	initMotor();
 	initSensors();
+	initMotor();
 	initLCD();
 	
 }
