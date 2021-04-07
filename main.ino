@@ -123,9 +123,17 @@ void initMotor(){
 	pinMode(MOTOR_STEP_PIN, OUTPUT);
 	motor_pulse_duration = 0;
 
-	GO_TO_ZERO = 1;
+
 	Timer1.initialize(4000000);
-	Timer1.attachInterrupt(toggleMotorStep);
+
+	int is_in_center = digitalRead(HALL_CENTER_PIN);
+	if (is_in_center){
+		GO_TO_ZERO = 0;
+	}
+	else{
+		GO_TO_ZERO = 1;
+		Timer1.attachInterrupt(toggleMotorStep);
+	}
 }
 
 void initLCD(){
