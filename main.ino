@@ -86,7 +86,7 @@ void setup(){
 void loop(){
 	if (session == 1){
 		static long elapsed_time = millis() - SESSION_START_TIME;
-		SESSION_REMAINING_TIME = SESSION_TIME - (elapsed_time / (100*60));
+		SESSION_REMAINING_TIME = SESSION_TIME - (elapsed_time / (1000*60));
 		if (elapsed_time >= SESSION_TIME){
 			GO_TO_ZERO = 1;
 		}
@@ -121,6 +121,8 @@ void initSensors(){
 void initMotor(){
 	pinMode(MOTOR_DIR_PIN, OUTPUT);
 	pinMode(MOTOR_STEP_PIN, OUTPUT);
+
+	digitalWrite(MOTOR_DIR_PIN, 1);
 	motor_pulse_duration = 0;
 
 
@@ -184,7 +186,7 @@ void centerReached(){
 
 void extremePause(){
 	long pause_start = millis();
-	while((millis() - pause_start) <= extreme_pause_time * 100);
+	while((millis() - pause_start) <= extreme_pause_time * 1000);
 }
 
 void toggleStartStop(){
@@ -195,6 +197,10 @@ void toggleStartStop(){
 		if (session == 1){
 			SESSION_START_TIME = millis();
 			Timer1.attachInterrupt(toggleMotorStep);
+		}
+		else {
+			Timer1.detachInterrupt();
+			// GO_TO_ZERO = 1;
 		}
 	}
 	last_start_stop_click = current_start_stop_click;
@@ -223,13 +229,14 @@ void setExtremePauseTime(){
 	int dec_butt_val = digitalRead(SESS_TIME_DEC_BUTT);
 	int extreme_butt_val = digitalRead(SET_EXTRM_TIME_BUTT);
 	
-	if (extreme_butt_val == 1 && inc_butt_val == 0 && dec_butt_val == 1){
+	if (extreme_butt_val == 1 && inc_butt_val == 0 && dec_butt_val == 0){
 		static long last_extrm_time_butt_click = 0;
-		long current_extrmtime_butt_click = millis();
-		if (current_extrmtime_butt_click - last_extrm_time_butt_click >= 200){
+		long current_extrm_time_butt_click = millis();
+		if (current_extrm_time_butt_click - last_extrm_time_butt_click >= 200){
 			extreme_pause_time += SKIPS_extreme_pause_time;
 			extreme_pause_time %= MAX_extreme_pause_time + 1;
 		}
+		last_extrm_time_butt_click = current_extrm_time_butt_click;
 	}
 }
 
@@ -244,6 +251,7 @@ void increaseSessionTime(){
 		if (current_sess_time_inc_butt_click - last_sess_time_inc_butt_click >= 200){
 			SESSION_TIME += 1;
 		}
+		last_sess_time_inc_butt_click = current_sess_time_inc_butt_click;
 	}
 }
 
@@ -258,5 +266,6 @@ void decreaseSessionTime(){
 		if (current_sess_time_dec_butt_click - last_sess_time_dec_butt_click >= 200){
 			SESSION_TIME -= 1;
 		}
+		last_sess_time_dec_butt_click = current_sess_time_dec_butt_click;
 	}
 }
