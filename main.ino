@@ -157,11 +157,13 @@ void initSevSeg(){
 void leftExtremeReached(){
 	extremePause();
 	motor_direction = 1
+	digitalWrite(MOTOR_DIR_PIN, motor_direction)
 }
 
 void rightExtremeReached(){
 	extremePause();
 	motor_direction = 0;
+	digitalWrite(MOTOR_DIR_PIN, motor_direction)
 }
 
 void centerReached(){
